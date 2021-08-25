@@ -1,0 +1,236 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model PCModel
+
+
+<div id="stickyBar" class="top">
+    <h1>Computer Configurator</h1>
+    <section class="configurator-bar">
+        <div class="container">
+            <div>Конфигурирай своя компютър</div>
+
+            <div class="configurator-bar-misc">
+                <div class="configurator-price" style="">
+                    <span id="price">$ 0.00</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@{
+    var allComponents = ViewData["components"] as IEnumerable<ComponentViewModel>;
+}
+<div class="container">
+
+    @using (Html.BeginForm("SaveNewConfiguration", "Home", FormMethod.Post, new { @id = "configForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="components">
+            <div class="configurator-header">
+                <div>1. Компютърна кутия</div>
+            </div>
+            <div class="items">
+
+                <div class="form-group">
+                    <label for=" @ConfiguratorApp.Common.Enums.ComponentType.Case" style="margin-left:100px;"> @ConfiguratorApp.Common.Enums.ComponentType.Case.GetDisplayName()</label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend input_margin">
+                            <img alt="" class="configurator-items-picture" src="/images/case.png">
+                        </div>
+                        @{
+                            var components = allComponents.Where(x => x.Type == ConfiguratorApp.Common.Enums.ComponentType.Case);
+
+                            var list = components.Select(x => new SelectListItem()
+                            {
+                                Text = x.Name + " - $ " + x.Price + " - Items left: " + x.Count,
+                                Value = x.Id.ToString()
+                            }).ToList();
+                        }
+
+                        @Html.DropDownListFor(m => m.CaseId, list, "Choose...", new { @class = "form-control", @required = "required" })
+
+                        @Html.ValidationMessageFor(model => model.CaseId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+            <div class="configurator-header">
+                <div>2. Главни Компоненти</div>
+            </div>
+            <div class="items">
+                <div class="form-group">
+                    <label for=" @ConfiguratorApp.Common.Enums.ComponentType.CPU" style="margin-left:100px;"> @ConfiguratorApp.Common.Enums.ComponentType.CPU.GetDisplayName()</label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend input_margin">
+                            <img alt="" class="configurator-items-picture" src="/images/cpu.png">
+                        </div>
+                        @{
+                            components = allComponents.Where(x => x.Type == ConfiguratorApp.Common.Enums.ComponentType.CPU);
+
+                            list = components.Select(x => new SelectListItem()
+                            {
+                                Text = x.Name + " - $ " + x.Price + " - Items left: " + x.Count,
+                                Value = x.Id.ToString()
+                            }).ToList();
+                        }
+                        @Html.DropDownListFor(m => m.CPUId, list, "Choose...", new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.CPUId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="lightgreen">
+                        <label for=" @ConfiguratorApp.Common.Enums.ComponentType.Cooling" style="margin-left:100px;"> @ConfiguratorApp.Common.Enums.ComponentType.Cooling.GetDisplayName()</label>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend input_margin">
+                                <img alt="" class="configurator-items-picture" src="/images/cpu_cooler.png">
+                            </div>
+                            @{
+                                components = allComponents.Where(x => x.Type == ConfiguratorApp.Common.Enums.ComponentType.Cooling);
+
+                                list = components.Select(x => new SelectListItem()
+                                {
+                                    Text = x.Name + " - $ " + x.Price + " - Items left: " + x.Count,
+                                    Value = x.Id.ToString()
+                                }).ToList();
+                            }
+                            @Html.DropDownListFor(m => m.CoolingId, list, "Choose...", new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.CoolingId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for=" @ConfiguratorApp.Common.Enums.ComponentType.Motherboard" style="margin-left:100px;"> @ConfiguratorApp.Common.Enums.ComponentType.Motherboard.GetDisplayName()</label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend input_margin">
+                            <img alt="" class="configurator-items-picture" src="/images/motherboard.png">
+                        </div>
+                        @{
+                            components = allComponents.Where(x => x.Type == ConfiguratorApp.Common.Enums.ComponentType.Motherboard);
+
+                            list = components.Select(x => new SelectListItem()
+                            {
+                                Text = x.Name + " - $ " + x.Price + " - Items left: " + x.Count,
+                                Value = x.Id.ToString()
+                            }).ToList();
+                        }
+                        @Html.DropDownListFor(m => m.MotherboardId, list, "Choose...", new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.MotherboardId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="lightgreen">
+
+                        <label for=" @ConfiguratorApp.Common.Enums.ComponentType.RAM" style="margin-left:100px;"> @ConfiguratorApp.Common.Enums.ComponentType.RAM.GetDisplayName()</label>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend input_margin">
+                                <img alt="" class="configurator-items-picture" src="/images/ram_memory.png">
+                            </div>
+                            @{
+                                components = allComponents.Where(x => x.Type == ConfiguratorApp.Common.Enums.ComponentType.RAM);
+
+                                list = components.Select(x => new SelectListItem()
+                                {
+                                    Text = x.Name + " - $ " + x.Price + " - Items left: " + x.Count,
+                                    Value = x.Id.ToString()
+                                }).ToList();
+                            }
+                            @Html.DropDownListFor(m => m.RAMId, list, "Choose...", new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.RAMId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for=" @ConfiguratorApp.Common.Enums.ComponentType.GPU" style="margin-left:100px;"> @ConfiguratorApp.Common.Enums.ComponentType.GPU.GetDisplayName()</label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend input_margin">
+                            <img alt="" class="configurator-items-picture" src="/images/gpu.png">
+                        </div>
+                        @{
+                            components = allComponents.Where(x => x.Type == ConfiguratorApp.Common.Enums.ComponentType.GPU);
+
+                            list = components.Select(x => new SelectListItem()
+                            {
+                                Text = x.Name + " - $ " + x.Price + " - Items left: " + x.Count,
+                                Value = x.Id.ToString()
+                            }).ToList();
+                        }
+                        @Html.DropDownListFor(m => m.GPUId, list, "Choose...", new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.GPUId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="lightgreen">
+                        <label for=" @ConfiguratorApp.Common.Enums.ComponentType.PSU.GetDisplayName()" style="margin-left:100px;"> @ConfiguratorApp.Common.Enums.ComponentType.PSU.GetDisplayName()</label>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend input_margin">
+                                <img alt="" class="configurator-items-picture" src="/images/power.png">
+                            </div>
+                            @{
+                                components = allComponents.Where(x => x.Type == ConfiguratorApp.Common.Enums.ComponentType.PSU);
+
+                                list = components.Select(x => new SelectListItem()
+                                {
+                                    Text = x.Name + " - $ " + x.Price + " - Items left: " + x.Count,
+                                    Value = x.Id.ToString()
+                                }).ToList();
+                            }
+                            @Html.DropDownListFor(m => m.PSUId, list, "Choose...", new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.PSUId, "", new { @class = "input-group-append text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for=" @ConfiguratorApp.Common.Enums.ComponentType.StorageDevice" style="margin-left:100px;"> @ConfiguratorApp.Common.Enums.ComponentType.StorageDevice.GetDisplayName()</label>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend input_margin">
+                            <img alt="" class="configurator-items-picture" src="/images/storage.png">
+                        </div>
+                        @{
+                            components = allComponents.Where(x => x.Type == ConfiguratorApp.Common.Enums.ComponentType.StorageDevice);
+
+                            list = components.Select(x => new SelectListItem()
+                            {
+                                Text = x.Name + " - $ " + x.Price + " - Items left: " + x.Count,
+                                Value = x.Id.ToString()
+                            }).ToList();
+                        }
+                        @Html.DropDownListFor(m => m.StorageDeviceId, list, "Choose...", new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.StorageDeviceId, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <input type="submit" id="submitNewConfig" value="Build PC" />
+
+        </div>
+    }
+</div>
+
+<script>
+
+    var list = @Html.Raw(JsonConvert.SerializeObject(ViewData["ItemsWithPrices"]));
+    $('.form-control').on('change', function () {
+        var sum = 0;
+        $(".form-control :selected").each(function () {
+            if (!isNaN(list[this.value])) {
+                var componentPrice = parseFloat(list[this.value]);
+                sum += componentPrice;
+            }
+        });
+        $('#price').show().text('$ ' + sum.toFixed(2));
+    });
+
+    $("#configForm").validate();
+</script>
