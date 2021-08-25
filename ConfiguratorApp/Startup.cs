@@ -8,6 +8,7 @@ namespace ConfiguratorApp
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using System;
+    using System.Net;
 
     public class Startup
     {
@@ -28,6 +29,12 @@ namespace ConfiguratorApp
             services.AddSession(opt =>
             {
                 opt.Cookie.IsEssential = true;
+            });
+
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
+                options.HttpsPort = 5001;
             });
 
             services.AddControllersWithViews();
@@ -57,7 +64,9 @@ namespace ConfiguratorApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();

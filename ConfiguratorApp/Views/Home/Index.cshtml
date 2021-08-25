@@ -8,11 +8,11 @@
     <h1>Computer Configurator</h1>
     <section class="configurator-bar">
         <div class="container">
-            <div>Конфигурирай своя компютър</div>
+            <div>Configure your computer</div>
 
             <div class="configurator-bar-misc">
                 <div class="configurator-price" style="">
-                    <span id="price">$ 0.00</span>
+                    Current price for your build:  <span id="price"> $ 0.00</span>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="components">
             <div class="configurator-header">
-                <div>1. Компютърна кутия</div>
+                <div>1. Computer Case</div>
             </div>
             <div class="items">
 
@@ -58,7 +58,7 @@
 
             </div>
             <div class="configurator-header">
-                <div>2. Главни Компоненти</div>
+                <div>2. Main Components</div>
             </div>
             <div class="items">
                 <div class="form-group">
@@ -217,9 +217,8 @@
         </div>
     }
 </div>
-
-<script>
-
+@section Scripts {
+    <script>
     var list = @Html.Raw(JsonConvert.SerializeObject(ViewData["ItemsWithPrices"]));
     $('.form-control').on('change', function () {
         var sum = 0;
@@ -233,4 +232,5 @@
     });
 
     $("#configForm").validate();
-</script>
+    </script>
+}

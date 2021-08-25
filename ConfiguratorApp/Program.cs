@@ -39,15 +39,15 @@ namespace ConfiguratorApp
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-.ConfigureLogging(logging =>
-{
-logging.ClearProviders();
-logging.AddConsole();
-})
-.ConfigureWebHostDefaults(webBuilder =>
-{
-webBuilder.UseStartup<Startup>();
-});
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
         }
     }
 }

@@ -25,7 +25,7 @@ namespace ConfiguratorApp.WebApp.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            List<ComponentViewModel> components = _context.Components.Select(c => new ComponentViewModel() { Id = c.ID, Model = c.Model, Name = c.Name, Picture = c.Picture, Price = c.Price, Type = c.Type, Count = c.Count }).ToList();
+            List<ComponentViewModel> components = _context.Components.Where(c => c.Count > 0).Select(c => new ComponentViewModel() { Id = c.ID, Model = c.Model, Name = c.Name, Picture = c.Picture, Price = c.Price, Type = c.Type, Count = c.Count }).ToList();
 
             ViewData["ItemsWithPrices"] = _context.Components.ToDictionary(c => c.ID, c => c.Price);
             ViewData["Components"] = components;

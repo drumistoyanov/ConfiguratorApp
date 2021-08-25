@@ -2,36 +2,29 @@
     ViewData["Title"] = "BuiltComputers";
 }
 @model ICollection<ReadyPcModel>
-<h1 style=" text-align: center;">Built Computers</h1>
 
+<h1 class="text-center py-5 px-0">Built Computers</h1>
 
-
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+<section>
+    <div class="container">
+        <div class="row justify-content-center">
             @foreach (var pc in Model)
             {
-                <div class="col mb-5">
+                <div class="col-4 mb-5">
                     <div class="card text-center h-100">
-                        <div class="test">
+                        <div class="test card text-center h-100">
                             @foreach (var component in pc.Components.OrderByDescending(c => c.Price))
                             {
-                                @*<div class="hiddentxt"> @component.Name : $ @component.Price</div>
-                                    <span class="hiddenimg">
-                                        <img src="@component.Picture" width="250" />
-                                    </span>*@
                                 <div>
                                     <a class="component-text" href="#" data-image="@component.Picture">@component.Name - $ @component.Price</a>
                                 </div>
                             }
                         </div>
-                        <div class="card-body p-4">
+                        <div class="card-body p-5">
                             <div class="text-center">
-                                <!-- Product name-->
                                 <span><b>Built on:</b> @pc.DateCreated</span>
                             </div>
                             <div class="text-center">
-                                <!-- Product price-->
                                 <span><b>Price:</b> @pc.Price</span>
                             </div>
                         </div>
@@ -43,19 +36,21 @@
         </div>
     </div>
 </section>
-<script type="text/javascript">
+@section Scripts {
+    <script type="text/javascript">
 
-    $(".component-text").mouseenter(function () {
-        if ($(this).parent('div').children('div.image').length) {
-            $(this).parent('div').children('div.image').show();
-        } else {
-            var image_name = $(this).data('image');
-            var imageTag = '<div class="image" style="position:absolute;">' + '<img src="' + image_name + '" alt="image" height="200" width="300" />' + '</div>';
-            $(this).parent('div').append(imageTag);
-        }
-    });
+        $(".component-text").mouseenter(function () {
+            if ($(this).parent('div').children('div.image').length) {
+                $(this).parent('div').children('div.image').show();
+            } else {
+                var image_name = $(this).data('image');
+                var imageTag = '<div class="image" style="position:absolute;">' + '<img src="' + image_name + '" alt="image" height="200" width="300" />' + '</div>';
+                $(this).parent('div').append(imageTag);
+            }
+        });
 
-    $(".component-text").mouseleave(function () {
-        $(this).parent('div').children('div.image').hide();
-    });
-</script>
+        $(".component-text").mouseleave(function () {
+            $(this).parent('div').children('div.image').hide();
+        });
+    </script>
+}
